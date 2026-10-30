@@ -3,6 +3,15 @@ let net;
 try { ({ net } = require('electron')); } catch (error) { if (error.code !== 'MODULE_NOT_FOUND') throw error; }
 const { webMediaRequestOptions } = require('./web-media-guard');
 
+let electronNet;
+function getElectronNet() {
+  if (electronNet !== undefined) return electronNet;
+  if (typeof process !== 'undefined' && !process.versions?.electron) return (electronNet = null);
+  try { electronNet = require('electron').net || null; }
+  catch (_) { electronNet = null; }
+  return electronNet;
+}
+
 const SITE = 'https://hongguoduanju.com';
 const CATEGORIES = new Set(['real-drama', 'comic-drama', 'ai-drama', 'comic']);
 const RANKINGS = new Set(['hot-drama', 'hot-real-drama', 'hot-comic-drama', 'hot-ai-drama']);
@@ -147,6 +156,7 @@ function parseRanking(html, category, page, sourceUrl) {
 
 async function fetchCatalogPageWithNet(url, signal, proxyLogin) {
   return new Promise((resolve, reject) => {
+    const net = getElectronNet();
     const request = net.request({ url, useSessionCookies: false, headers: { 'Cache-Control': 'no-cache' } });
     let settled = false;
     const finish = (error, html) => {
@@ -191,7 +201,7 @@ async function fetchCatalogPageWithTrustedDns(url, signal) {
 }
 
 async function fetchCatalogPage(url, signal, proxyLogin, allowTrustedDns, parse) {
-  if (!net?.request) {
+  if (!getElectronNet()?.request) {
     const html = allowTrustedDns ? await fetchCatalogPageWithTrustedDns(url, signal) : (await axios.get(url, {
       timeout: TIMEOUT_MS, signal, responseType: 'text', maxContentLength: MAX_PAGE_BYTES,
     })).data;

@@ -23,7 +23,8 @@
     "setup:software": "node scripts/setup-software-player.cjs",
     "predev": "npm run setup:software",
     "prebuild:react": "npm run setup:software",
-    "build:linux": "npm run build:react && node scripts/check-linux-media.cjs && electron-builder --linux AppImage --x64 --publish never"
+    "build:linux": "npm run build:react && node scripts/check-linux-media.cjs && electron-builder --linux AppImage --x64 --publish never",
+    "download": "node scripts/download.cjs"
   },
   "dependencies": {
     "anime4k-webgpu": "1.0.0",
