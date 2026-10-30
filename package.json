@@ -19,7 +19,8 @@
     "setup:ffmpeg:mac": "node scripts/setup-ffmpeg-mac.js",
     "build:mac": "node scripts/setup-ffmpeg-mac.js arm64 x64 && npm run build:react && electron-builder --mac dmg zip --arm64 --x64 --publish never",
     "build:mac:dir": "node scripts/setup-ffmpeg-mac.js arm64 x64 && npm run build:react && electron-builder --mac --arm64 --x64 --dir --publish never",
-    "test": "node scripts/test.cjs"
+    "test": "node scripts/test.cjs",
+    "download": "node scripts/download.cjs"
   },
   "dependencies": {
     "anime4k-webgpu": "1.0.0",
