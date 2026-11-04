@@ -101,9 +101,7 @@ function uniqueEpisodeFilename(seriesTitle, episode) {
 function seriesDownloadDir(root, seriesId, seriesTitle) {
   const title = sanitizeFolderName(seriesTitle) || '未命名短剧';
   const suffix = crypto.createHash('sha256').update(String(seriesId)).digest('hex').slice(0, 12);
-  const group = String(seriesId).startsWith('hema:') ? '河马短剧'
-    : String(seriesId).startsWith('xifan:') ? '西饭短剧' : '红果短剧';
-  return path.join(root, group, `${title}-${suffix}`);
+  return path.join(root, `${title}-${suffix}`);
 }
 
 function resolveTool(name, root) {

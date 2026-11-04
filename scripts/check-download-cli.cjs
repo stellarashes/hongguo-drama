@@ -16,9 +16,9 @@ assert.equal(cli.uniqueEpisodeFilename('测试剧', { index: 7, title: '' }), '�
 const seriesId = '123456789';
 const suffix = crypto.createHash('sha256').update(seriesId).digest('hex').slice(0, 12);
 assert.equal(cli.seriesDownloadDir('/tmp/root', seriesId, 'A/B:C'),
-  path.join('/tmp/root', '红果短剧', `ABC-${suffix}`));
+  path.join('/tmp/root', `ABC-${suffix}`));
 assert.equal(cli.seriesDownloadDir('/tmp/root', 'hema:abc', '标题'),
-  path.join('/tmp/root', '河马短剧', `标题-${crypto.createHash('sha256').update('hema:abc').digest('hex').slice(0, 12)}`));
+  path.join('/tmp/root', `标题-${crypto.createHash('sha256').update('hema:abc').digest('hex').slice(0, 12)}`));
 
 assert.equal(cli.isHls({ url: 'https://example.com/a.m3u8?token=1' }), true);
 assert.equal(cli.isHls({ url: 'https://example.com/a.mp4' }), false);
